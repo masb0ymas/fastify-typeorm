@@ -1,0 +1,49 @@
+{
+  "name": "fastify-typeorm",
+  "version": "0.0.0",
+  "description": "Built using Fastify & TypeORM",
+  "main": "dist/main.js",
+  "scripts": {
+    "prebuild": "rimraf dist coverage",
+    "build": "tsc && tsc-alias",
+    "start": "nodemon --exec node ./dist/main.js",
+    "dev": "npm-run-all build start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fastify",
+    "typeorm"
+  ],
+  "author": "masb0ymas <n.fajri@mail.com>",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "node": ">= 16.x"
+  },
+  "dependencies": {
+    "@fastify/compress": "^6.4.0",
+    "@fastify/cookie": "^9.0.4",
+    "@fastify/cors": "^8.3.0",
+    "@fastify/formbody": "^7.4.0",
+    "@fastify/helmet": "^11.0.0",
+    "@fastify/jwt": "^7.2.0",
+    "@fastify/multipart": "^7.7.3",
+    "@fastify/rate-limit": "^8.0.3",
+    "@fastify/static": "^6.10.2",
+    "colorette": "^2.0.20",
+    "date-fns": "^2.30.0",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.22.0",
+    "npm-run-all": "^4.1.5",
+    "pino": "^8.15.0",
+    "pino-pretty": "^10.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.6",
+    "nodemon": "^3.0.1",
+    "rimraf": "^5.0.1",
+    "ts-node": "^10.9.1",
+    "tsc-alias": "^1.8.7",
+    "typescript": "^5.2.2"
+  }
+}
