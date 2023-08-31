@@ -5,12 +5,13 @@ import formBody from '@fastify/formbody'
 import helmet from '@fastify/helmet'
 import formMultipart from '@fastify/multipart'
 import rateLimit from '@fastify/rate-limit'
+import fastifySensible from '@fastify/sensible'
 import fastifyStatic from '@fastify/static'
 import fastify, { FastifyInstance } from 'fastify'
 import path from 'path'
+import indexRoutes from '~/routes'
 import { env } from './env'
 import { logger } from './pino'
-import indexRoutes from '~/routes'
 
 export class App {
   private _app: FastifyInstance
@@ -35,10 +36,11 @@ export class App {
       root: path.join(__dirname, '/../../public'),
     })
     this._app.register(rateLimit, { max: 100 })
+    this._app.register(fastifySensible)
   }
 
   private _routes() {
-    this._app.register(indexRoutes, { prefix: '/' })
+    this._app.register(indexRoutes)
   }
 
   public create() {
