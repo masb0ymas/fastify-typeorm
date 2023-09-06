@@ -1,5 +1,5 @@
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
-import roleRoute from './role'
+import roleController from '~/app/controller/role.controller'
 
 export default async function v1Route(fastify: FastifyInstance) {
   fastify.get('/', (request: FastifyRequest, reply: FastifyReply) => {
@@ -10,5 +10,5 @@ export default async function v1Route(fastify: FastifyInstance) {
     return reply.forbidden(message)
   })
 
-  fastify.register(roleRoute, { prefix: '/role' })
+  fastify.register(roleController, { prefix: '/role' })
 }
