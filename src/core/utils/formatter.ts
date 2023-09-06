@@ -1,4 +1,7 @@
+import { green } from 'colorette'
 import { validate as uuidValidate } from 'uuid'
+import { logger } from '~/config/pino'
+import ResponseError from '../modules/response/ResponseError'
 
 /**
  *
@@ -31,8 +34,21 @@ export function capitalizeFirstLetter(string: string): string {
  */
 export function validateUUID(value: string): string {
   if (!uuidValidate(value)) {
-    throw new Error('incorrect uuid format')
+    throw new ResponseError.BadRequest('incorrect uuid format')
   }
 
   return value
+}
+
+/**
+ *
+ * @param route
+ */
+export function routeLogger(route: string) {
+  const msgType = green('routes')
+
+  const routeDir = green(route)
+  const message = `controller ${routeDir} registered`
+
+  logger.info(`${msgType} - ${message}`)
 }

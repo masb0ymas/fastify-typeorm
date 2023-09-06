@@ -29,13 +29,12 @@ class HttpResponse {
   /**
    * Response Get or Sucess
    * @param dataResponse
-   * @param options
    * @returns
    */
   public static get<TData>(
     dataResponse: DataResponseEntity<TData>
   ): DtoHttpResponse<TData> {
-    const message = 'success.data_received'
+    const message = 'data has been received'
 
     return this.baseResponse({ message, ...dataResponse })
   }
@@ -43,13 +42,12 @@ class HttpResponse {
   /**
    * Response Created
    * @param dataResponse
-   * @param options
    * @returns
    */
   public static created<TData>(
     dataResponse: DataResponseEntity<TData>
   ): DtoHttpResponse<TData> {
-    const message = 'success.data_added'
+    const message = 'data has been added'
 
     return this.baseResponse({ statusCode: 201, message, ...dataResponse })
   }
@@ -57,13 +55,12 @@ class HttpResponse {
   /**
    * Response Updated
    * @param dataResponse
-   * @param options
    * @returns
    */
   public static updated<TData>(
     dataResponse: DataResponseEntity<TData>
   ): DtoHttpResponse<TData> {
-    const message = 'success.data_updated'
+    const message = 'data has been updated'
 
     return this.baseResponse({ message, ...dataResponse })
   }
@@ -71,13 +68,12 @@ class HttpResponse {
   /**
    * Response Deleted
    * @param dataResponse
-   * @param options
    * @returns
    */
   public static deleted<TData>(
     dataResponse: DataResponseEntity<TData>
   ): DtoHttpResponse<TData> {
-    const message = 'success.data_deleted'
+    const message = 'data has been deleted'
 
     return this.baseResponse({ message, ...dataResponse })
   }
