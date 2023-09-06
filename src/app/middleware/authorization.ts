@@ -4,7 +4,7 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 import _ from 'lodash'
 import { env } from '~/config/env'
 
-export async function authMiddleware(
+export async function authorization(
   request: FastifyRequest,
   reply: FastifyReply
 ) {
