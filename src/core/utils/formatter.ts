@@ -1,4 +1,6 @@
 import { validate as uuidValidate } from 'uuid'
+import { green } from 'colorette'
+import { logger } from '~/config/pino'
 
 /**
  *
@@ -35,4 +37,17 @@ export function validateUUID(value: string): string {
   }
 
   return value
+}
+
+/**
+ *
+ * @param route
+ */
+export function routeLogger(route: string) {
+  const msgType = green('routes')
+
+  const routeDir = green(route)
+  const message = `controller ${routeDir} registered`
+
+  logger.info(`${msgType} - ${message}`)
 }

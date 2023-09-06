@@ -1,6 +1,22 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
+import { pino } from 'pino'
+import { formatDate } from '~/core/utils/date'
+import { env } from './env'
 
-export const logger: any = {
+export const logger = pino(
+  {
+    level: env.NODE_ENV === 'production' ? 'info' : 'debug',
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        colorize: true,
+      },
+    },
+  },
+  pino.destination(`./logs/pino-${formatDate(new Date())}.log`)
+)
+
+export const fastifyLogger: any = {
   transport: {
     target: 'pino-pretty',
   },
