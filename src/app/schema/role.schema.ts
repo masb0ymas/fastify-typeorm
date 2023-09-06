@@ -6,6 +6,16 @@ const create = yup
   })
   .required()
 
-const roleSchema = { create }
+const multipleIds = yup
+  .object({
+    ids: yup.lazy((val) =>
+      Array.isArray(val)
+        ? yup.array().of(yup.string().required('ids is required'))
+        : yup.string().required('ids is required')
+    ),
+  })
+  .required()
+
+const roleSchema = { create, multipleIds }
 
 export default roleSchema

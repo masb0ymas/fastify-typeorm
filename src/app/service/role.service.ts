@@ -3,15 +3,13 @@ import { FastifyRequest } from 'fastify'
 import { type TOptions } from 'i18next'
 import _ from 'lodash'
 import { In, type FindOneOptions, type Repository } from 'typeorm'
-import { env } from '~/config/env'
-import { i18n } from '~/config/i18n'
 import { type IReqOptions } from '~/core/interface/ReqOptions'
 import { type DtoFindAll } from '~/core/interface/dto/Paginate'
 import { useQuery } from '~/core/modules/hooks/useQuery'
+import ResponseError from '~/core/modules/response/ResponseError'
 import { validateUUID } from '~/core/utils/formatter'
 import { AppDataSource } from '~/database/data-source'
 import { Role, type RoleAttributes } from '~/database/entities/Role'
-import roleSchema from '../schema/role.schema'
 
 interface RoleRepository {
   roleRepo: Repository<Role>
@@ -39,11 +37,7 @@ export default class RoleService {
     // declare repository
     const { roleRepo } = this._repository()
 
-    const lang = _.get(req, 'query.lang', undefined)
     const reqQuery = _.get(req, 'query') as ReqQuery
-
-    const defaultLang = lang ?? env.APP_LANG
-    const i18nOpt: string | TOptions = { lng: defaultLang }
 
     // create query builder
     const query = roleRepo.createQueryBuilder(this._entity)
@@ -54,7 +48,7 @@ export default class RoleService {
     const data = await newQuery.getMany()
     const total = await newQuery.getCount()
 
-    const message = i18n.t('success.data_received', i18nOpt)
+    const message = 'data has been received'
     return { message: `${total} ${message}`, data, total }
   }
 
@@ -76,10 +70,8 @@ export default class RoleService {
     })
 
     if (!data) {
-      const options = { ...i18nOpt, entity: 'role' }
-      const message = i18n.t('errors.not_found', options)
-
-      throw new Error(message)
+      const message = 'data not found or has been deleted'
+      throw new ResponseError.NotFound(message)
     }
 
     return data
@@ -195,7 +187,7 @@ export default class RoleService {
     const i18nOpt: string | TOptions = { lng: options?.lang }
 
     if (_.isEmpty(ids)) {
-      const message = i18n.t('errors.cant_be_empty', i18nOpt)
+      const message = "can't be empty"
       throw new Error(`ids ${message}`)
     }
   }
