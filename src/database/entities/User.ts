@@ -1,4 +1,3 @@
-import * as bcrypt from 'bcrypt'
 import {
   Column,
   DeleteDateColumn,
@@ -11,6 +10,7 @@ import {
   Relation,
   Unique,
 } from 'typeorm'
+import { hashing } from '~/config/hashing'
 import { Base, type IBaseEntity } from './Base'
 import { Role } from './Role'
 import { Session } from './Session'
@@ -43,7 +43,10 @@ export type CreatePassword = Pick<
   'new_password' | 'confirm_new_password'
 >
 
-export type LoginAttributes = Pick<UserEntity, 'email' | 'password'>
+export type LoginAttributes = Pick<UserEntity, 'email' | 'password'> & {
+  latitude?: string
+  longitude?: string
+}
 
 export type UserAttributes = Omit<
   UserEntity,
@@ -105,6 +108,6 @@ export class User extends Base {
   sessions: Array<Relation<Session>>
 
   async comparePassword(current_password: string): Promise<boolean> {
-    return await bcrypt.compare(current_password, this.password)
+    return await hashing.verify(this.password, current_password)
   }
 }
